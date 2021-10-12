@@ -53,6 +53,8 @@ link_list[44] = "https://rr2---sn-5hne6nsy.googlevideo.com/videoplayback?expire=
 link_list[45] = "https://rr1---sn-5hne6nsz.googlevideo.com/videoplayback?expire=1634081516&ei=bKplYZ_uLJu00_wPtoqpyA4&ip=2a02:4780:8:a::5&id=878b3f47881365e7&itag=18&source=blogger&mh=xw&mm=31&mn=sn-5hne6nsz&ms=au&mv=m&mvi=1&pl=48&susc=bl&mime=video/mp4&vprv=1&dur=2773.391&lmt=1424084037748547&mt=1634052302&sparams=expire,ei,ip,id,itag,source,susc,mime,vprv,dur,lmt&sig=AOq0QJ8wRgIhAJ18B0g2HJqlWK2nZvrAYSdVXEcZwm2cub7Kj3WnF_OuAiEAzfKZZTO8SQVrGVYoTCoTRG6qyhZVTqwqliKLk0tj33A&lsparams=mh,mm,mn,ms,mv,mvi,pl&lsig=AG3C_xAwRgIhAI5_UYy6au9i6RgIXIqmrguFZehE4Xt9AD9QbU8RncP0AiEA-ie4tXL6syTCt6EU83WIDrT-FQB-Hro2S2_MOCjR29c";
 link_list[46] = "https://rr3---sn-5hne6nsz.googlevideo.com/videoplayback?expire=1634081518&ei=bqplYcv_IOyg0_wPjMWm6Ag&ip=2a02:4780:8:a::5&id=77f1ccf47fa2829b&itag=18&source=blogger&mh=Bw&mm=31&mn=sn-5hne6nsz&ms=au&mv=m&mvi=3&pl=48&susc=bl&mime=video/mp4&vprv=1&dur=2741.789&lmt=1424084060751893&mt=1634052302&sparams=expire,ei,ip,id,itag,source,susc,mime,vprv,dur,lmt&sig=AOq0QJ8wRgIhAKIG3jz5A09k_wnP7taUglPywuhA54jlsIaXdiMYAlB9AiEA1WuehS6ORaZuXCcuUSu-Ob4LOmtN838_t9TVF8zxNAQ&lsparams=mh,mm,mn,ms,mv,mvi,pl&lsig=AG3C_xAwRgIhALnPAzJl1L7gQaBG8q5TQj3_fpljNrJmo_2tTKeyy2KNAiEApwLUHxPXsbMXzzUnnHNuCRyDxaJ5O-5Gxe3yZrx5mV0";
 link_list[47] = "https://rr2---sn-5hne6nsz.googlevideo.com/videoplayback?expire=1634081520&ei=cKplYcr8GLy00_wPx6qD4AY&ip=2a02:4780:8:a::5&id=e8bb1db27810d249&itag=18&source=blogger&mh=7M&mm=31&mn=sn-5hne6nsz&ms=au&mv=m&mvi=2&pl=48&susc=bl&mime=video/mp4&vprv=1&dur=2776.526&lmt=1424084093044112&mt=1634052302&sparams=expire,ei,ip,id,itag,source,susc,mime,vprv,dur,lmt&sig=AOq0QJ8wRQIgHXBaDu8W3XE0icXAW4-2Cz3FSLzpIwU7UUkRcm4KHQ0CIQC0VT5l7yuQAhMUYgfo8NfHqAC_c_6i6R4R3G81Nx1bXg&lsparams=mh,mm,mn,ms,mv,mvi,pl&lsig=AG3C_xAwRgIhAM4QQCeKhIV-1tD-mvEIdH8UTvUHPKbXD1UplBr_fg5sAiEA2bM7nWTx-H53veJSBDb6BGRPMeZeoxxEYF_5dWKuTds";
+
+
 var temporadasNum = temporada_listLastIndex.length;
 var currentTempIndex = 0;
 var currentTempNum = 1;
@@ -60,7 +62,6 @@ var currentEpisodioNum = 2;
 
 var video_title = document.getElementById("video-title");
 
-var flagOnline = true;
 
 var video_player = document.getElementById("video_player");
 video = video_player.getElementsByTagName("video")[0];
@@ -70,10 +71,7 @@ for (var i = 1; i < link_list.length; i++) {
     var link = document.createElement("a");
     var imag = document.createElement("img");
     link.href = link_list[i];
-    if (flagOnline)
-        imag.src = "https://via.placeholder.com/400x150/000000/FFFFFF/?text=Episodio-" + (currentEpisodioNum) + "-T" + currentTempNum;
-    else
-        imag.src = "seminternet.png";
+    imag.src = "https://via.placeholder.com/400x150/000000/FFFFFF/?text=Episodio-" + (currentEpisodioNum) + "-T" + currentTempNum;
 
     imag.alt = "Lie To Me (Duplado) - Episódio " + (currentEpisodioNum) + " - T" + currentTempNum;
     imag.title = "Lie To Me (Duplado)- Episódio " + (currentEpisodioNum) + " - T" + currentTempNum;
@@ -101,25 +99,8 @@ lnkNum = allLnks.length;
 //video.removeAttribute("controls");
 video.removeAttribute("poster");
 
-function fetchVideoAndPlay(link) {
-    fetch(link)
-    .then(response => response.blob())
-    .then(blob => {
-      video.srcObject = blob;
-      return video.play();
-    })
-    .then(_ => {
-      // Video playback started ;)
-      video.play();
-    })
-    .catch(e => {
-      // Video playback failed ;(
-	console.log('Video playback failed ;(');
-    })
-  }
-
 function playVid(index) {
-    console.log(link_list[index]);
+    console.log('play id: ' + index);
     video_links.children[index].classList.add("currentvid");
     //video_title
     video_title.innerHTML = video_links.children[index].children[0].title;
@@ -128,9 +109,9 @@ function playVid(index) {
     //source[1].src = path + link_list[index];// + ".webm";   
     currentVid = index;
     video.load();
-    fetchVideoAndPlay(path + link_list[index]);
-
-    window.scrollTo(0, 0);
+    // Video playback started ;)
+    video.play();
+    console.log('play id: ok ' + index);
 }
 for (var i = 0; i < lnkNum; i++) {
     //var filename = allLnks[i].href;
@@ -142,18 +123,19 @@ for (var i = 0; i < lnkNum; i++) {
                 allLnks[i].classList.remove("currentvid");
             }
             playVid(index);
+            window.scrollTo(0, 0);
         }
     })(i);
 }
 
 video.addEventListener('ended', function () {
-    console.log('ended() :' + currentVid)
     allLnks[currentVid].classList.remove("currentvid");
     if ((currentVid + 1) >= lnkNum) {
         nextVid = 0;
     } else {
         nextVid = currentVid + 1;
     }
+    console.log('ended() :' + currentVid)
     playVid(nextVid);
 })
 
@@ -164,23 +146,3 @@ video.addEventListener('mouseenter',
 video.addEventListener('mouseleave', function () {
     //video.removeAttribute("controls");
 })
-
-const checkOnlineStatus = async () => {
-    try {
-        const online = await fetch("LieToMe.png");
-        return online.status >= 200 && online.status < 300; // either true or false
-    } catch (err) {
-        return false; // definitely offline
-    }
-};
-
-
-const validaOnline = async () => {
-    const online = await checkOnlineStatus();
-    if (online) {
-        flagOnline = true;
-    } else {
-        flagOnline = false;
-    }
-}
-//validaOnline();
