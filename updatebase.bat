@@ -1,21 +1,21 @@
-@echo off
 echo .
 echo .
 echo . Atualizando a base
-php c:\xampp2\htdocs\hdev\app\playserie\start.php?id=1
+cd "C:\xampp2\htdocs\hdev\app\playserie\"
+php start.php id=1
 echo .
 echo .
-echo . Arquivo gerado, atualizando o site.
-echo .
-copy c:\xampp2\htdocs\hdev\app\playserie\lie-to-me\data.js . /y
-echo .
-git add .
-echo . incluindo base...
-git commit -m"nova base atualizada."
-echo . salvando base ...
-git push
-echo . publicando base ...
-echo .
-echo .
-echo .
+rem echo . Arquivo gerado, atualizando o site.
+rem echo .
+rem copy "c:\xampp2\htdocs\hdev\app\playserie\lie-to-me\data.js" "C:\xampp2\htdocs\playserie\data.js" /y
+rem echo .
+rem git add .
+rem echo . incluindo base...
+rem git commit -m"nova base atualizada."
+rem echo . salvando base ...
+rem git push
+rem echo . publicando base ...
+rem echo .
+rem echo .
+rem echo .
 pause
